@@ -1,0 +1,6 @@
+{
+  "name": "StudySwap AI",
+  "description": "Official website for StudySwap AI Android Application — AI-Powered Study Assistant & Digital Study Notes Marketplace.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
