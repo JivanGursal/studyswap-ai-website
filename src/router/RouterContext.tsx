@@ -20,22 +20,34 @@ interface RouterProviderProps {
 export const RouterProvider: React.FC<RouterProviderProps> = ({ children }) => {
   const [currentPath, setCurrentPath] = useState<string>(() => {
     if (typeof window !== 'undefined') {
-      const path = window.location.pathname;
+      const base = import.meta.env.BASE_URL || '/';
+      const fullPath = window.location.pathname;
       // Handle hash-based sub-routing if present
       if (window.location.hash && window.location.hash.startsWith('#/')) {
         return window.location.hash.slice(1);
       }
-      return path || '/';
+      // If the app is served from a sub-path (BASE_URL), strip that prefix
+      if (base !== '/' && fullPath.startsWith(base)) {
+        // slice at base.length - 1 to retain leading '/'
+        return fullPath.slice(base.length - 1) || '/';
+      }
+      return fullPath || '/';
     }
     return '/';
   });
 
   useEffect(() => {
     const handlePopState = () => {
+      const base = import.meta.env.BASE_URL || '/';
       if (window.location.hash && window.location.hash.startsWith('#/')) {
         setCurrentPath(window.location.hash.slice(1));
       } else {
-        setCurrentPath(window.location.pathname || '/');
+        const full = window.location.pathname || '/';
+        if (base !== '/' && full.startsWith(base)) {
+          setCurrentPath(full.slice(base.length - 1) || '/');
+        } else {
+          setCurrentPath(full);
+        }
       }
     };
 
@@ -45,11 +57,12 @@ export const RouterProvider: React.FC<RouterProviderProps> = ({ children }) => {
 
   const navigate = (to: string, replace = false) => {
     if (typeof window === 'undefined') return;
-
+    const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+    const target = `${base}${to}`;
     if (replace) {
-      window.history.replaceState({}, '', to);
+      window.history.replaceState({}, '', target);
     } else {
-      window.history.pushState({}, '', to);
+      window.history.pushState({}, '', target);
     }
     setCurrentPath(to);
     window.scrollTo({ top: 0, behavior: 'smooth' });

@@ -37,6 +37,11 @@ jobs:
           VITE_APK_DOWNLOAD_URL: "https://github.com/JivanGursal/studyswap-ai-website/releases/download/v1.0.0/StudySwap-AI.apk"
         run: npm run build
 
+      - name: Create SPA 404 fallback
+        run: |
+          # Ensure direct navigation works on GitHub Pages for client-side routing
+          cp dist/index.html dist/404.html
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

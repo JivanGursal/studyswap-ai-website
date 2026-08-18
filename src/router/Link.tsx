@@ -49,9 +49,14 @@ export const Link: React.FC<LinkProps> = ({
 
   const combinedClass = `${className} ${isActive ? activeClassName : ''}`.trim();
 
+  // Ensure href reflects the configured base so anchor links point to the
+  // correct project sub-path when deployed (e.g. /studyswap-ai-website/)
+  const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+  const href = to.startsWith('http://') || to.startsWith('https://') ? to : `${base}${to}`;
+
   return (
     <a
-      href={to}
+      href={href}
       onClick={handleClick}
       className={combinedClass}
       aria-current={isActive ? 'page' : undefined}
