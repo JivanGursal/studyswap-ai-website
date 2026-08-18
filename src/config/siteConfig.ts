@@ -39,9 +39,13 @@ export const siteConfig: SiteConfig = {
   siteDescription: "StudySwap AI brings study notes, AI-powered learning tools, quizzes, revision assistance, study planning, and secure digital resources together in one student-focused Android app.",
   
   // APK Download Configuration (Centralized static public asset path)
-  // Use Vite's BASE_URL so the final public URL respects the configured base path
-  // (e.g. /studyswap-ai-website/downloads/StudySwap-AI.apk)
-  apkDownloadUrl: `${import.meta.env.BASE_URL}downloads/StudySwap-AI.apk`,
+  // Prefer an explicit release URL via Vite env var `VITE_APK_DOWNLOAD_URL`.
+  // If not provided, default to the official GitHub Release asset URL so
+  // production deployments do not depend on a local `public/downloads/` copy.
+  // Example: https://github.com/<owner>/<repo>/releases/download/<tag>/StudySwap-AI.apk
+  apkDownloadUrl:
+    (import.meta.env as any).VITE_APK_DOWNLOAD_URL ||
+    'https://github.com/JivanGursal/studyswap-ai-website/releases/download/v1.0.0/StudySwap-AI.apk',
   apkVersion: "v1.0.0",
   apkReleaseDate: "August 2026",
   apkFileSize: "24.8 MB",

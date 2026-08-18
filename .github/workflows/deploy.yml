@@ -33,6 +33,8 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          VITE_APK_DOWNLOAD_URL: "https://github.com/JivanGursal/studyswap-ai-website/releases/download/v1.0.0/StudySwap-AI.apk"
         run: npm run build
 
       - name: Setup Pages
