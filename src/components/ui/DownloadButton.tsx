@@ -33,7 +33,6 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({
       <a
         id="apk-download-cta-btn"
         href={siteConfig.apkDownloadUrl}
-        download="StudySwap-AI.apk"
         className={`inline-flex items-center justify-center gap-2.5 transition-all duration-200 cursor-pointer ${getButtonStyles()} ${basePadding} ${className}`}
         aria-label="Download StudySwap AI Android APK"
       >
