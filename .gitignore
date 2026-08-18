@@ -6,5 +6,6 @@ coverage/
 *.log
 .env*
 !.env.example
+
 /public/downloads/*.apk
-!public/downloads/StudySwap-AI.apk
+!/public/downloads/StudySwap-AI.apk
